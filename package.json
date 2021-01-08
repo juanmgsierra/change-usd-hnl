@@ -1,5 +1,5 @@
 {
-  "name": "nextjs",
+  "name": "CurrencyChangeUSDHNL",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -15,8 +15,6 @@
     "react-dom": "^16.13.1"
   },
   "license": "MIT",
-  "keywords": [
-    "next"
-  ],
+  "keywords": ["next"],
   "description": "A \"Hello World\" application with multiple pages that shows how Next.js routing works."
 }

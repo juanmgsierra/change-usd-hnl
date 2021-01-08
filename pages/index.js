@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import DenseAppBar from "../components/appBar";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1
@@ -34,24 +34,27 @@ export default function IndexPage() {
 
   return (
     <div className={classes.root}>
+      <DenseAppBar />
       <Paper className={classes.paper}>
-        <Typography variant="h2" gutterBottom>
-          Cambio del dolar
-        </Typography>
-        <Typography variant="h3">{lpsUSD}</Typography>
+        <Typography variant="h3">Cambio del dolar </Typography>
+        <Typography variant="h3">$1 = L{lpsUSD} </Typography>
         <br />
         <Grid item xs={12} sm container>
           <Grid item xs={12} sm={6}>
             <TextField
               id="outlined-basic"
-              label="lps"
+              label="USD"
               variant="outlined"
+              type="number"
               onChange={(e) => {
                 setLps(e.target.value * lpsUSD);
               }}
             />
             <Typography variant="h3">
-              {!lps || lps.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+              <>
+                {!lps ||
+                  lps.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,", null)}
+              </>
             </Typography>
           </Grid>
         </Grid>
