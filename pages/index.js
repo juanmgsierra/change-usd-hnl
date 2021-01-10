@@ -20,13 +20,17 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     display: "flex",
     justifyContent: "center"
+  },
+  bottomPush: {
+    //position: "fixed",
+    textAlign: "right"
   }
 }));
 
 const numbValidation = (e) => {
   var charCode = e.which;
   var sizeEntry = e.target.value.length;
-  if (charCode >= 32 && (charCode < 48 || charCode > 57)) {
+  if (charCode >= 32 && (charCode < 46 || charCode > 57)) {
     e.preventDefault();
   }
   if (sizeEntry > 6) {
@@ -50,35 +54,41 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className={classes.root}>
-      <DenseAppBar />
-      <Paper className={classes.paper}>
-        <Typography className={classes.content} variant="h4">
-          Cambio del Dolar
-        </Typography>
-        <Typography className={classes.content} variant="h4">
-          $1 = L{Number(lpsUSD).toFixed(2)}
-        </Typography>
-        <br />
-        <div className={classes.content}>
-          <TextField
-            id="outlined-basic"
-            label="USD"
-            variant="outlined"
-            type="number"
-            onKeyPress={numbValidation}
-            onChange={(e) => {
-              setLps(e.target.value * lpsUSD);
-            }}
-          />
+    <>
+      <div className={classes.root}>
+        <DenseAppBar />
+        <Paper className={classes.paper} elevation={3}>
           <Typography className={classes.content} variant="h4">
-            <>
-              L
-              {!lps || lps.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,", null)}
-            </>
+            Cambio del Dolar
           </Typography>
-        </div>
-      </Paper>
-    </div>
+          <Typography className={classes.content} variant="h4">
+            $1 = L{Number(lpsUSD).toFixed(2)}
+          </Typography>
+          <br />
+          <div className={classes.content}>
+            <TextField
+              id="outlined-basic"
+              label="USD"
+              variant="outlined"
+              type="number"
+              onKeyPress={numbValidation}
+              onChange={(e) => {
+                setLps(e.target.value * lpsUSD);
+              }}
+            />
+            <Typography className={classes.content} variant="h4">
+              <>
+                L
+                {!lps ||
+                  lps.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,", null)}
+              </>
+            </Typography>
+          </div>
+          <div className={classes.bottomPush}>
+            <Typography>Powered by JMGS</Typography>
+          </div>
+        </Paper>
+      </div>
+    </>
   );
 }
