@@ -1,11 +1,11 @@
+import DenseAppBar from "../components/appBar";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import DenseAppBar from "../components/appBar";
+import { useState } from "react";
+import numbValidation from "../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,32 +27,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const numbValidation = (e) => {
-  var charCode = e.which;
-  var sizeEntry = e.target.value.length;
-  if (charCode >= 32 && (charCode < 46 || charCode > 57)) {
-    e.preventDefault();
-  }
-  if (sizeEntry > 6) {
-    e.preventDefault();
-  }
-};
+const fetchData = async () =>
+  await axios
+    .get(
+      "https://free.currconv.com/api/v7/convert?q=USD_HNL&compact=ultra&apiKey=5a49beefa5e7696bc287"
+    )
+    .then((res) => ({
+      currency: res.data.USD_HNL
+    }));
 
-export default function IndexPage() {
-  const classes = useStyles();
-  const [lpsUSD, setLpsUSD] = useState("");
+const IndexPage = ({ currency }) => {
   const [lps, setLps] = useState("");
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url:
-        "https://free.currconv.com/api/v7/convert?q=USD_HNL&compact=ultra&apiKey=5a49beefa5e7696bc287"
-    }).then((response) => {
-      setLpsUSD(response.data.USD_HNL);
-    });
-  }, []);
-
+  const classes = useStyles();
   return (
     <>
       <div className={classes.root}>
@@ -62,7 +48,7 @@ export default function IndexPage() {
             Cambio del Dolar
           </Typography>
           <Typography className={classes.content} variant="h4">
-            $1 = L{Number(lpsUSD).toFixed(2)}
+            $1 = L{currency.toFixed(2)}
           </Typography>
           <br />
           <div className={classes.content}>
@@ -73,7 +59,7 @@ export default function IndexPage() {
               type="number"
               onKeyPress={numbValidation}
               onChange={(e) => {
-                setLps(e.target.value * lpsUSD);
+                setLps(e.target.value * currency);
               }}
             />
             <Typography className={classes.content} variant="h4">
@@ -91,4 +77,13 @@ export default function IndexPage() {
       </div>
     </>
   );
-}
+};
+
+export const getStaticProps = async () => {
+  const data = await fetchData();
+  return {
+    props: data // will be passed to the page component as props
+  };
+};
+
+export default IndexPage;
