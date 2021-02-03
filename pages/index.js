@@ -57,7 +57,7 @@ const IndexPage = ({ currency }) => {
             Cambio del Dolar
           </Typography>
           <Typography className={classes.content} variant="h4">
-            $1 = L{currency.toFixed(2)}
+            $1 = L{currency.toFixed(4)}
           </Typography>
           <br />
           <div className={classes.content}>
@@ -85,7 +85,7 @@ const IndexPage = ({ currency }) => {
             </Typography>
           </div>
           <div className={classes.bottomPush}>
-            <Typography>Powered by JMGS</Typography>
+            <Typography>Powered by JMGS v1.2</Typography>
           </div>
         </Paper>
       </div>
