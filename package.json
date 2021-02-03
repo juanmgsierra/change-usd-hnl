@@ -9,12 +9,15 @@
   },
   "dependencies": {
     "@material-ui/core": "4.11.2",
+    "@material-ui/icons": "4.11.2",
     "axios": "0.21.1",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "license": "MIT",
-  "keywords": ["next"],
+  "keywords": [
+    "next"
+  ],
   "description": "A \"Hello World\" application with multiple pages that shows how Next.js routing works."
 }

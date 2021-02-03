@@ -6,6 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { useState } from "react";
 import numbValidation from "../utils";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center"
   },
   bottomPush: {
+    //position: "fixed",
     textAlign: "right"
   }
 }));
@@ -36,8 +39,15 @@ const fetchData = async () =>
     }));
 
 const IndexPage = ({ currency }) => {
+  const [val, setVal] = useState("");
   const [lps, setLps] = useState("");
   const classes = useStyles();
+
+  const ClearData = () => {
+    setVal("");
+    setLps("");
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -47,17 +57,22 @@ const IndexPage = ({ currency }) => {
             Cambio del Dolar
           </Typography>
           <Typography className={classes.content} variant="h4">
-            $1 = L{currency.toFixed(4)}
+            $1 = L{currency.toFixed(2)}
           </Typography>
           <br />
           <div className={classes.content}>
+            <IconButton onClick={ClearData}>
+              <DeleteIcon />
+            </IconButton>
             <TextField
               id="outlined-basic"
               label="USD"
               variant="outlined"
               type="number"
+              value={val}
               onKeyPress={numbValidation}
               onChange={(e) => {
+                setVal(e.target.value);
                 setLps(e.target.value * currency);
               }}
             />
@@ -70,7 +85,7 @@ const IndexPage = ({ currency }) => {
             </Typography>
           </div>
           <div className={classes.bottomPush}>
-            <Typography>Powered by JMGS v1.1</Typography>
+            <Typography>Powered by JMGS</Typography>
           </div>
         </Paper>
       </div>
